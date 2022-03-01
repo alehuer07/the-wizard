@@ -13,7 +13,7 @@ export default {
   dbName: "thewizard",
   user: "postgres",
   password: "postgres",
-  host: "172.18.96.1",
+  host: "127.0.0.1",
   port: 5432,
   type: "postgresql",
   debug: !__prod__,
