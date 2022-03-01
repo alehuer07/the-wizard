@@ -16,7 +16,7 @@ import connectRedis from "connect-redis";
 
 // let RedisStore = require("connect-redis")(session);
 
-import { MyContext } from "./types";
+import cors from "cors";
 
 const main = async () => {
   // DB Setup
@@ -26,13 +26,15 @@ const main = async () => {
   const app = express();
   const corsOptions = {
     credentials: true,
-    origin: "https://studio.apollographql.com",
+    origin: ["https://studio.apollographql.com", "http://localhost:3000"],
   };
   app.set("trust proxy", !__prod__);
 
   // Redis Setup
   const RedisStore = connectRedis(session);
   const redisClient = redis.createClient();
+
+  app.use(cors(corsOptions));
 
   app.use(
     session({
@@ -59,12 +61,12 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: ({ req, res }): MyContext => ({ em: orm.em, req, res }),
+    context: ({ req, res }) => ({ em: orm.em, req, res }),
   });
 
   // Start-up Servers
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app, cors: corsOptions });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log("server started on localhost:4000");
