@@ -30,13 +30,11 @@ export const Register: React.FC<registerProps> = ({}) => {
         initialValues={{ username: "", password: "" }}
         onSubmit={async (values, formikBag) => {
           const response = await register(values);
-          console.log(response);
           if (response.data?.register.errors) {
             console.log("THERE WAS AN ERROR");
             formikBag.setErrors(toErrorMap(response.data.register.errors));
           } else if (response.data?.register.user) {
             // worked
-            console.log("WORKED");
             router.push("/");
           }
         }}
