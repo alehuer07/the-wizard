@@ -60,17 +60,17 @@ export class UserResolver {
         errors: [
           {
             field: "username",
-            message: "length must be greater than 2",
+            message: "Length must be greater than 2",
           },
         ],
       };
     }
-    if (options.username.length <= 2) {
+    if (options.password.length <= 2) {
       return {
         errors: [
           {
             field: "password",
-            message: "length must be greater than 2",
+            message: "Length must be greater than 2",
           },
         ],
       };
@@ -91,7 +91,7 @@ export class UserResolver {
           errors: [
             {
               field: "username",
-              message: "username has already been taken",
+              message: "Username has already been taken",
             },
           ],
         };
